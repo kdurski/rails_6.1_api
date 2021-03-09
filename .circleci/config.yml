@@ -1,0 +1,102 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.5.0
+  shellcheck: circleci/shellcheck@2.2.2
+  ruby: circleci/ruby@1.1.2
+
+workflows:
+  version: 2
+  linters:
+    jobs:
+      - docker/hadolint:
+          dockerfiles: "./Dockerfile"
+      - shellcheck/check
+
+  rails_checks:
+    jobs:
+      - build
+      - rubocop:
+          requires:
+            - build
+      - reek:
+          requires:
+            - build
+      - brakeman:
+          requires:
+            -  build
+      - rails_best_practices:
+          requires:
+            -  build
+      - rspec:
+          requires:
+            - build
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.0.0
+    environment:
+      BUNDLE_JOBS: '3'
+      BUNDLE_RETRY: '3'
+    steps:
+      - checkout
+      - ruby/install-deps
+
+  rubocop:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rubocop-check
+
+  reek:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Reek Checks
+          command: bundle exec reek
+
+  brakeman:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Brakeman Checks
+          command: bundle exec brakeman
+
+  rails_best_practices:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Rails Best Practices Checks
+          command: bundle exec rails_best_practices
+
+  rspec:
+    docker:
+      - image: cimg/ruby:3.0.0
+      - image: circleci/mysql:5.7
+      - image: redis:alpine
+    environment:
+      RAILS_ENV: test
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 2m
+      - run:
+          name: Database setup
+          command: |
+            cp config/database.circle.yml config/database.yml
+            bundle exec rails db:create db:schema:load --trace
+      - ruby/rspec-test

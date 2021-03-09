@@ -1,0 +1,9 @@
+test:
+  adapter: mysql2
+  host: 127.0.0.1
+  port: 3306
+  encoding: utf8
+  pool: 10
+  username: root
+  password:
+  database: fa_test

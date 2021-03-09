@@ -1,0 +1,55 @@
+# IDEs, editors and OS
+*Dockerfile
+.dockerignore
+.idea
+.buildpath
+.project
+*.komodoproject
+*.swp
+*.swo
+.DS_Store
+.byebug_history
+dump.rdb
+docs/
+.hound.yml
+.rubocop.yml
+
+# git
+.git
+
+# Bundler
+.bundle
+vendor/bundle
+
+# Logs
+log/*
+
+# Assets and temporary files
+public/javascripts/all.js
+public/stylesheets/all.css
+public/assets/*
+.sass-cache
+tmp/*
+
+# Testing and CI
+coverage/
+html-report/
+spec/
+.yardoc
+.circleci
+
+# Private configuration
+config/database.yml
+config/database.circle.yml
+config/newrelic.yml
+
+# Foreman
+.env
+.foreman
+
+#Emacs
+*~
+
+# Local scripts and files
+local/*
+node_modules/*
