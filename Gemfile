@@ -17,9 +17,6 @@ gem 'jsonapi-serializer', '~> 2.2'
 gem 'discard', '~> 1.2'
 # Support for pagination
 gem 'pagy', '~> 4.1'
-# Support for background jobs
-gem 'sidekiq', '~> 6.0'
-gem 'sidekiq-scheduler', '~> 3.0'
 # Support for kafka consumers
 gem 'racecar', '~> 2.2'
 
