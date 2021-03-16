@@ -6,10 +6,12 @@ require:
 
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 3.0
   Exclude:
     - 'bin/**/*'
     - 'db/**/*'
     - 'config/**/*'
+    - 'vendor/**/*'
     - Rakefile
     - config.ru
 
