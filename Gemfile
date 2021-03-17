@@ -29,12 +29,14 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
   gem 'factory_bot'
-  gem 'rubocop'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
-  gem 'rubocop-performance'
-  gem 'rubocop-thread_safety'
-  gem 'reek'
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-performance', require: false
+  gem 'rubocop-thread_safety', require: false
+  gem 'reek', require: false
+  gem 'brakeman', require: false
+  gem 'rails_best_practices', require: false
 end
 
 group :development do

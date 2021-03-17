@@ -13,12 +13,21 @@ workflows:
           dockerfiles: "./Dockerfile"
       - shellcheck/check
 
-  rspec_and_rubocop:
+  rails_checks:
     jobs:
       - build
       - rubocop:
           requires:
             - build
+      - reek:
+          requires:
+            - build
+      - brakeman:
+          requires:
+            -  build
+      - rails_best_practices:
+          requires:
+            -  build
       - rspec:
           requires:
             - build
@@ -41,6 +50,37 @@ jobs:
       - checkout
       - ruby/install-deps
       - ruby/rubocop-check
+
+  reek:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Reek Checks
+          command: bundle exec reek
+
+  brakeman:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Brakeman Checks
+          command: bundle exec brakeman
+
+  rails_best_practices:
+    docker:
+      - image: cimg/ruby:3.0.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Rails Best Practices Checks
+          command: bundle exec rails_best_practices
+
   rspec:
     docker:
       - image: cimg/ruby:3.0.0

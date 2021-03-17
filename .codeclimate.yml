@@ -1,0 +1,16 @@
+version: "2"
+
+plugins:
+  bundler-audit:
+    enabled: true
+  duplication:
+    enabled: true
+  fixme:
+    enabled: true
+
+exclude_patterns:
+  - bin/
+  - db/
+  - config/
+  - vendor/
+  - spec/
