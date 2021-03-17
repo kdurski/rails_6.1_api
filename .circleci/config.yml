@@ -11,11 +11,7 @@ workflows:
     jobs:
       - docker/hadolint:
           dockerfiles: "./Dockerfile"
-          # issues in temporary Dockerfile file
-          ignore-rules: 'DL3008,DL3028' # do not check for specific versions of gems & apt packages
-      - shellcheck/check:
-          # issues in temporary ubuntu-hardening file
-          exclude: 'SC2086' # do not require quotes over variables
+      - shellcheck/check
 
   rspec_and_rubocop:
     jobs:
