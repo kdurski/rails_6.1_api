@@ -1,24 +1,36 @@
-# README
+# flex-app-service
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Repository for Functional Alerting service
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+Standard rails installation:
 
-* System dependencies
+- rails db:create
+- rails db:setup
 
-* Configuration
+## Running tests and linter checks before PR
 
-* Database creation
+If you want to run up-to-date suite, please ran the included Makefile by executing this command 
 
-* Database initialization
+- `make`
 
-* How to run the test suite
+This will run all of the tests and automated linter checks.
 
-* Services (job queues, cache servers, search engines, etc.)
+### Tests
 
-* Deployment instructions
+Automated tests are written using RSpec:
 
-* ...
+- `rspec`
+
+### Linters
+
+Besides tests there is a couple different linter checks that are ran before each merge on CI, including
+
+- `rubocop`
+- `reek`
+- `brakeman`
+- `rails_best_practices` 
+  
+and possibly more in the future.
+
