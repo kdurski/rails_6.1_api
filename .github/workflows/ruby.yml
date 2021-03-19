@@ -1,4 +1,4 @@
-name: Ruby
+name: RSpec & Linters
 
 on:
   push:
@@ -7,6 +7,20 @@ on:
     branches: [ master ]
 
 jobs:
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: brpaz/hadolint-action@v1.2.1
+        with:
+          dockerfile: Dockerfile 
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master          
   rspec:
     runs-on: ubuntu-latest
     steps:
@@ -49,7 +63,7 @@ jobs:
         with:
           ruby-version: 3.0.0
           bundler-cache: true 
-      - name: Run Reek
+      - name: Run Brakemn
         run: bundle exec brakeman
   rails_best_practices:
     runs-on: ubuntu-latest
@@ -60,7 +74,5 @@ jobs:
         with:
           ruby-version: 3.0.0
           bundler-cache: true 
-      - name: Run Reek
+      - name: Run Rails Best Practices
         run: bundle exec rails_best_practices -c .rails_best_practices.yml
-        
-        
