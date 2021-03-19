@@ -29,3 +29,38 @@ jobs:
           bundler-cache: true 
       - name: Run Rubocop
         run: bundle exec rubocop
+  reek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true 
+      - name: Run Reek
+        run: bundle exec reek
+  brakeman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true 
+      - name: Run Reek
+        run: bundle exec brakeman
+  rails_best_practices:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.0
+          bundler-cache: true 
+      - name: Run Reek
+        run: bundle exec rails_best_practices -c .rails_best_practices.yml
+        
+        
